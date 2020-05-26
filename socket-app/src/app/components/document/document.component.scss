@@ -1,0 +1,41 @@
+textarea {
+  position: fixed;
+  width: calc(100% - 235px);
+  height: 88.1%;
+  right: 0;
+  top: 0;
+  font-size: 18pt;
+  padding-top: 20px;
+  resize: none;
+  border: none;
+  padding: 20px 0px 20px 15px;
+}
+div {
+  position: fixed;
+  width: calc(100% - 220px);
+  height: 7%;
+  right: 0;
+  font-size: 18pt;
+  padding-top: 20px;
+  resize: none;
+  border: none;
+  padding-left: 0;
+  top: 91%;
+  button {
+    padding: 16px 8px 6px 0px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: "Roboto", Tahoma, Geneva, Verdana, sans-serif;
+    color: #818181;
+    display: inline-block;
+    width: 48%;
+  }
+  :hover {
+    color: black;
+    cursor: pointer;
+  }
+}
+img {
+  height: 85%;
+  width: 4%;
+}

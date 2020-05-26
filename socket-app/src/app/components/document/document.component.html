@@ -1,0 +1,14 @@
+<textarea
+  [(ngModel)]="document.doc"
+  (keyup)="editDoc()"
+  placeholder="Start typing..."
+></textarea>
+<div>
+  <button class="Action1" (click)="deleteDoc()">Delete document</button>
+  <img
+    id="Speech"
+    (click)="startDictation()"
+    src="https://i.imgur.com/cHidSVu.gif"
+  />
+  <button class="Action2" (click)="saveDoc()">Save document</button>
+</div>
