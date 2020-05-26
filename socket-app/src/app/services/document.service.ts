@@ -24,7 +24,7 @@ export class DocumentService {
 
   saveDocument(name: string, text: string) {
     axios
-      .post("http://localhost:4444/docs/add", {
+      .post("https://limitless-hollows-40293.herokuapp.com/docs/add", {
         name: name,
         text: text,
       })
@@ -35,7 +35,7 @@ export class DocumentService {
   deleteDocument(doc) {
     this.socket.emit("deleteDoc", doc);
     axios
-      .delete("http://localhost:4444/docs/" + doc.id)
+      .delete("https://limitless-hollows-40293.herokuapp.com/docs/" + doc.id)
       .then((resp) => console.log(resp.data))
       .catch((error) => console.log(error.message));
   }
@@ -65,7 +65,7 @@ export class DocumentService {
       recognition.lang = "uk-UA";
       recognition.start();
 
-      recognition.onresult = function (e) {
+      recognition.onresult = async function (e) {
         doc.doc += e.results[0][0].transcript;
         recognition.stop();
       };

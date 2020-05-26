@@ -10,13 +10,11 @@ router.route("/").get((req, res) => {
 router.route("/add").post((req, res) => {
   const name = req.body.name;
   const text = req.body.text;
-  //if (Document.exists({ name: name }))
-  {
+  if (Document.exists({ name: name })) {
     Document.findOneAndUpdate({ name: name }, { text: text })
       .then(() => res.json("Document updated!"))
       .catch((err) => res.status(400).json("Error: " + err));
-  } //else
-  {
+  } else {
     const newDocument = new Document({
       name,
       text,

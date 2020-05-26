@@ -5,13 +5,14 @@ const io = require("socket.io")(http);
 const express = require("express");
 const cors = require("cors");
 let Document = require("../models/document.model");
-//const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 4444;
+const path = require("path");
 
 const documents = {};
 var idarr = [];
-var count = 1;
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, "../dist")));
 
 io.on("connection", (socket) => {
   let previousId;
@@ -21,35 +22,28 @@ io.on("connection", (socket) => {
       currentId,
       console.log(`Socket ${socket.id} joined room ${currentId}`)
     );
-    idarr[count] = currentId;
-    count++;
     previousId = currentId;
   };
 
   const safeLeave = (currentId) => {
     const index = idarr.findIndex((n) => n == currentId);
+
+    if ((index == 0) & (idarr.length != 1)) {
+      previousId = idarr[1];
+      socket.join(
+        previousId,
+        console.log(`Socket ${socket.id} joined room ${previousId}`)
+      );
+    } else {
+      previousId = idarr[index - 1];
+      socket.join(
+        previousId,
+        console.log(`Socket ${socket.id} joined room ${previousId}`)
+      );
+    }
     if (index !== -1) {
       idarr.splice(index, 1);
-      count--;
     }
-    if ((index == 1) & (count != 2)) {
-      for (let i = index; i < count; i++) {
-        if (documents[idarr[i]] != null) {
-          previousId = idarr[i];
-          break;
-        }
-      }
-    } else
-      for (let i = index - 1; i > 0; i--) {
-        if (documents[idarr[i]] != null) {
-          previousId = idarr[i];
-          break;
-        }
-      }
-    socket.join(
-      previousId,
-      console.log(`Socket ${socket.id} joined room ${previousId}`)
-    );
   };
 
   socket.on("getDoc", (docId) => {
@@ -60,6 +54,7 @@ io.on("connection", (socket) => {
   socket.on("addDoc", (doc) => {
     documents[doc.id] = doc;
     safeJoin(doc.id);
+    idarr.push(doc.id);
     io.emit("documents", Object.keys(documents));
     socket.emit("document", doc);
   });
@@ -70,7 +65,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("deleteDoc", (doc) => {
-    if (idarr.length == 2) console.log("nope");
+    if (idarr.length == 1) console.log("nope");
     else {
       delete documents[doc.id];
       io.emit("documents", Object.keys(documents));
@@ -106,6 +101,10 @@ connection.once("open", () => {
 const docsRouter = require("../routes/docs");
 app.use("/docs", docsRouter);
 
-http.listen(4444, () => {
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+});
+
+http.listen(PORT, () => {
   console.log("Listening on port 4444");
 });
