@@ -65,7 +65,7 @@ export class DocumentService {
       recognition.lang = "uk-UA";
       recognition.start();
 
-      recognition.onresult = async function (e) {
+      recognition.onresult = function (e) {
         doc.doc += e.results[0][0].transcript;
         recognition.stop();
       };

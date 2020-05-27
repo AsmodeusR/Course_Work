@@ -45,6 +45,5 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   startDictation() {
     this.documentService.addDoc(this.document);
-    this.documentService.editDocument(this.document);
   }
 }
