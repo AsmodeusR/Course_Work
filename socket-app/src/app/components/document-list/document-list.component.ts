@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 
-import { Injectable } from "@angular/core";
-
 import { DocumentService } from "src/app/services/document.service";
 
 import { Document } from "../../models/document";
