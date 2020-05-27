@@ -29,7 +29,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     axios
-      .get("http://localhost:4444/docs/")
+      .get("https://limitless-hollows-40293.herokuapp.com/docs/")
       .then((resp) =>
         resp.data.map((doc) => ((this.docsobj[this.count] = doc), this.count++))
       );

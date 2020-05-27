@@ -5,7 +5,7 @@ const io = require("socket.io")(http);
 const express = require("express");
 const cors = require("cors");
 let Document = require("../models/document.model");
-const PORT = process.env.PORT || 44774;
+const PORT = process.env.PORT || 4444;
 const path = require("path");
 
 const documents = {};
